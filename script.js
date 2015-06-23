@@ -1,30 +1,48 @@
-//load a sprite -- mave it default to sinking -- on keypress have it thrust up
+//load a sprite -- mave it default to sinking -- on keypress have it thrust up XXXXXXXX
 
-//make blocks come at player -- if collision, player explodes -- player starts over
+//make blocks come at player -- XXXXXXXX
+
+//make loop that makes block segments
+
+//if collision, player explodes -- player starts over
 
 var game = new Phaser.Game(1000, 300, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
 
     game.load.spritesheet('ship', 'assets/gfx/ship.png', 32, 32);
-    game.load.spritesheet('block', 'assets/gfx/block.png');
+    game.load.image('block', 'assets/gfx/block.png');
     game.load.spritesheet('explosion', '/assets/gfx/explosion.png', 128, 128);
 
 }
 
 function create() {
+
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+
  //player
   player = game.add.sprite(32,32, 'ship');
   player.animations.add('up', [1]);
   player.animations.add('down', [0]);
 
-
-  game.physics.startSystem(Phaser.Physics.ARCADE);
   game.physics.arcade.enable(player);
   player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
-
   player.body.bounce.setTo(0.25, 0.25);
+
+ //block
+  block = game.add.sprite(200,100, 'block');
+
+  game.physics.arcade.enable(block);
+  block.body.collideWorldBounds = false;
+  block.body.velocity.x = -300;
+
+
+
+
+
+
+
 
 }
 
