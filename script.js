@@ -14,6 +14,7 @@ var game = new Phaser.Game(1000, 300, Phaser.AUTO, '', { preload: preload, creat
 
 var block;
 
+
 function preload() {
 
     game.load.spritesheet('ship', 'assets/gfx/ship.png', 32, 32);
@@ -32,22 +33,24 @@ function create() {
   player.animations.add('down', [0]);
 
   game.physics.arcade.enable(player);
-  player.body.gravity.y = 300;
+  player.body.gravity.y = 400;
   player.body.collideWorldBounds = true;
   player.body.bounce.setTo(0.25, 0.25);
 
  //block
-  // blockSegments = game.add.group();
+  blockSegments = game.add.group();
   function wait(){
    setInterval(
     function sendBlock() {
-        for (x = 0; x < game.rnd.integerInRange(1, 4); x += 1) {
+        for (x = 0; x < game.rnd.integerInRange(1, 3); x += 1) {
           var randomValue = game.rnd.integerInRange(32, 300);
+
           block = game.add.sprite(game.width + 32, randomValue, 'block');
           game.physics.arcade.enable(block);
+          block.body.immovable = true;
           block.body.collideWorldBounds = false;
           block.body.velocity.x = -300;
-          // blockSegments.add(block);
+          blockSegments.add(block);
         };
       },1000);
   };
@@ -55,35 +58,29 @@ function create() {
     wait();
 
 
-
-
-
-
-  // game.physics.arcade.enable(block);
-  // block.body.collideWorldBounds = false;
-  // block.body.velocity.x = -300;
-
-
-
-
-
-
-
-
 }
 
 function update() {
+
+  // function resetPlayer(){
+  //   player.x = 32
+  //   player.y = 32
+  // }
+
+  game.physics.arcade.collide(player, blockSegments, console.log('hey'))
+
+
   cursors = game.input.keyboard.createCursorKeys();
 
       if (cursors.up.isDown){
-        player.body.velocity.y = -110;
+        player.body.velocity.y = -120;
+
         player.animations.play('up');
       }
       else {
         player.animations.play('down');
       }
 
-      // console.log(block.body.position.x)
 
 
 
