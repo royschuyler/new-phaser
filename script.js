@@ -15,6 +15,7 @@ var game = new Phaser.Game(1000, 300, Phaser.AUTO, '', { preload: preload, creat
 var block;
 
 
+
 function preload() {
 
     game.load.spritesheet('ship', 'assets/gfx/ship.png', 32, 32);
@@ -53,9 +54,11 @@ function create() {
           blockSegments.add(block);
         };
       },1000);
+   // blockSegments.add(block);
   };
 
     wait();
+    // game.physics.arcade.collide(player, blockSegments, console.log('hey'))
 
 
 }
@@ -85,5 +88,7 @@ function update() {
 
 
 }
+
+
 
 
