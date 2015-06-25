@@ -34,8 +34,12 @@ GameState.prototype.create = function() {
     this.ship.anchor.setTo(0.5, 0.5);
     this.ship.angle = 0; // Point the ship up
 
+
     // Enable physics on the ship
     this.game.physics.enable(this.ship, Phaser.Physics.ARCADE);
+
+    //border screen
+    this.ship.body.collideWorldBounds = true;
 
     // Set maximum velocity
     this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
@@ -53,15 +57,15 @@ GameState.prototype.create = function() {
     this.ship.body.bounce.setTo(0.25, 0.25);
 
     // Create some ground for the ship to land on
-    this.ground = this.game.add.group();
-    for(var x = 0; x < this.game.width; x += 32) {
-        // Add the ground blocks, enable physics on each, make them immovable
-        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-        groundBlock.body.immovable = true;
-        groundBlock.body.allowGravity = false;
-        this.ground.add(groundBlock);
-    }
+      // this.ground = this.game.add.group();
+      // for(var x = 0; x < this.game.width; x += 32) {
+      //     // Add the ground blocks, enable physics on each, make them immovable
+      //     var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+      //     this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+      //     groundBlock.body.immovable = true;
+      //     groundBlock.body.allowGravity = false;
+      //     this.ground.add(groundBlock);
+      // }
 
 
     //make blocks comae at player
@@ -77,6 +81,7 @@ GameState.prototype.create = function() {
           this.game.physics.arcade.enable(block);
           block.body.immovable = true;
           block.body.collideWorldBounds = false;
+          block.body.allowGravity = false;
           block.body.velocity.x = -300;
           blockSegments.add(block);
         };
@@ -158,8 +163,8 @@ GameState.prototype.update = function() {
     this.game.physics.arcade.collide(this.ship, this.ground);
 
     // Keep the ship on the screen
-    if (this.ship.x > this.game.width) this.ship.x = 0;
-    if (this.ship.x < 0) this.ship.x = this.game.width;
+    // if (this.ship.x > this.game.width) this.ship.x = 0;
+    // if (this.ship.x < 0) this.ship.x = this.game.width;
 
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, rotate left
