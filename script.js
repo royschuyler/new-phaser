@@ -38,9 +38,10 @@ function create() {
   player.body.collideWorldBounds = true;
   player.body.bounce.setTo(0.25, 0.25);
 
+
  //block
   blockSegments = game.add.group();
-  function wait(){
+  // function wait(){
    setInterval(
     function sendBlock() {
         for (x = 0; x < game.rnd.integerInRange(1, 3); x += 1) {
@@ -57,11 +58,15 @@ function create() {
    // blockSegments.add(block);
   };
 
-    wait();
-    // game.physics.arcade.collide(player, blockSegments, console.log('hey'))
+//     wait();
+//     // game.physics.arcade.collide(player, blockSegments)
 
 
-}
+// }
+
+
+
+
 
 function update() {
 
@@ -70,7 +75,14 @@ function update() {
   //   player.y = 32
   // }
 
-  game.physics.arcade.collide(player, blockSegments, console.log('hey'))
+  // console.log(player.position.x)
+
+  // if (player.position.x != 32) {
+  //   // player.position.x = 32
+
+  // }
+
+  game.physics.arcade.collide(player, blockSegments)
 
 
   cursors = game.input.keyboard.createCursorKeys();
@@ -83,9 +95,6 @@ function update() {
       else {
         player.animations.play('down');
       }
-
-
-
 
 }
 

@@ -5,8 +5,8 @@
 
 
 
-
 var GameState = function(game) {
+
 };
 
 // Load images and sounds
@@ -26,7 +26,7 @@ GameState.prototype.create = function() {
     this.ACCELERATION = 200; // pixels/second/second
     this.MAX_SPEED = 250; // pixels/second
     this.DRAG = 0; // pixels/second
-    this.GRAVITY = 50; // pixels/second/second
+    this.GRAVITY = 400; // pixels/second/second
 
 
     // Add the ship to the stage
@@ -40,12 +40,13 @@ GameState.prototype.create = function() {
 
     //border screen
     this.ship.body.collideWorldBounds = true;
+    this.ship.body.velocity.y = -120;
 
     // Set maximum velocity
-    this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
+    // this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
 
     // Add drag to the ship that slows it down when it is not accelerating
-    this.ship.body.drag.setTo(this.DRAG, this.DRAG); // x, y
+    // this.ship.body.drag.setTo(this.DRAG, this.DRAG); // x, y
 
     // Choose a random starting angle and velocity for the ship
     this.resetShip();
@@ -56,7 +57,7 @@ GameState.prototype.create = function() {
     // Make ship bounce a little
     this.ship.body.bounce.setTo(0.25, 0.25);
 
-    // Create some ground for the ship to land on
+   // Create some ground for the ship to land on
       // this.ground = this.game.add.group();
       // for(var x = 0; x < this.game.width; x += 32) {
       //     // Add the ground blocks, enable physics on each, make them immovable
@@ -70,26 +71,26 @@ GameState.prototype.create = function() {
 
     //make blocks comae at player
 
- var blockSegments = this.game.add.group();
-  function wait(){
+ // this.blockSegments = this.game.add.group();
+
    setInterval(
     function sendBlock() {
+        // this.blockSegments = this.game.add.group();
         for (x = 0; x < this.game.rnd.integerInRange(1, 3); x += 1) {
           var randomValue = this.game.rnd.integerInRange(32, 300);
+          this.blockSegments = this.game.add.group();
 
-          block = this.game.add.sprite(game.width + 32, randomValue, 'ground');
-          this.game.physics.arcade.enable(block);
+          var block = this.game.add.sprite(game.width + 32, randomValue, 'ground');
+          this.game.physics.enable(block, Phaser.Physics.ARCADE);
           block.body.immovable = true;
           block.body.collideWorldBounds = false;
           block.body.allowGravity = false;
           block.body.velocity.x = -300;
-          blockSegments.add(block);
+          this.blockSegments.add(block);
         };
       },1000);
    // blockSegments.add(block);
-  };
 
-    wait();
 
     // Create a group for explosions
     this.explosionGroup = this.game.add.group();
@@ -98,10 +99,10 @@ GameState.prototype.create = function() {
     // This is only necessary because this is an HTML5 game. Games on other
     // platforms may not need code like this.
     this.game.input.keyboard.addKeyCapture([
-        Phaser.Keyboard.LEFT,
-        Phaser.Keyboard.RIGHT,
+        // Phaser.Keyboard.LEFT,
+        // Phaser.Keyboard.RIGHT,
         Phaser.Keyboard.UP,
-        Phaser.Keyboard.DOWN
+        // Phaser.Keyboard.DOWN
     ]);
 };
 
@@ -150,63 +151,72 @@ GameState.prototype.resetShip = function() {
     // Move the ship back to the top of the stage
     this.ship.x = 32;
     this.ship.y = 32;
-    this.ship.body.acceleration.setTo(0, 0);
+    // this.ship.body.acceleration.setTo(0, 0);
 
     // Select a random starting angle and velocity
-    this.ship.angle = this.game.rnd.integerInRange(-180, 180);
-    this.ship.body.velocity.setTo(this.game.rnd.integerInRange(100, 200), 0);
+    // this.ship.angle = this.game.rnd.integerInRange(-180, 180);
+    // this.ship.body.velocity.setTo(this.game.rnd.integerInRange(100, 200), 0);
 };
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
     // Collide the ship with the ground
-    this.game.physics.arcade.collide(this.ship, this.ground);
+    // this.game.physics.arcade.collide(this.ship, this.ground);
+      this.game.physics.arcade.collide(this.ship, this.blockSegments, console.log('collision') );
+
+
+
+
+
+
+
+
 
     // Keep the ship on the screen
     // if (this.ship.x > this.game.width) this.ship.x = 0;
     // if (this.ship.x < 0) this.ship.x = this.game.width;
 
-    if (this.leftInputIsActive()) {
-        // If the LEFT key is down, rotate left
-        this.ship.body.angularVelocity = -this.ROTATION_SPEED;
-    } else if (this.rightInputIsActive()) {
-        // If the RIGHT key is down, rotate right
-        this.ship.body.angularVelocity = this.ROTATION_SPEED;
-    } else {
-        // Stop rotating
-        this.ship.body.angularVelocity = 0;
-    }
+    // if (this.leftInputIsActive()) {
+    //     // If the LEFT key is down, rotate left
+    //     this.ship.body.angularVelocity = -this.ROTATION_SPEED;
+    // } else if (this.rightInputIsActive()) {
+    //     // If the RIGHT key is down, rotate right
+    //     this.ship.body.angularVelocity = this.ROTATION_SPEED;
+    // } else {
+    //     // Stop rotating
+    //     this.ship.body.angularVelocity = 0;
+    // }
 
     // Set a variable that is true when the ship is touching the ground
-    var onTheGround = this.ship.body.touching.down;
+    // var onTheGround = this.ship.body.touching.down;
 
-    if (onTheGround) {
-        if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
-            // The ship hit the ground too hard.
-            // Blow it up and start the game over.
-            this.getExplosion(this.ship.x, this.ship.y);
-            this.resetShip();
-        } else {
-            // We've landed!
-            // Stop rotating and moving and aim the ship up.
-            this.ship.body.angularVelocity = 0;
-            this.ship.body.velocity.setTo(0, 0);
-            this.ship.angle = -90;
-        }
+    // if (onTheGround) {
+    //     if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
+    //         // The ship hit the ground too hard.
+    //         // Blow it up and start the game over.
+    //         this.getExplosion(this.ship.x, this.ship.y);
+    //         this.resetShip();
+    //     } else {
+    //         // We've landed!
+    //         // Stop rotating and moving and aim the ship up.
+    //         this.ship.body.angularVelocity = 0;
+    //         this.ship.body.velocity.setTo(0, 0);
+    //         this.ship.angle = -90;
+    //     }
 
-    }
+    // }
 
     if (this.upInputIsActive()) {
         // If the UP key is down, thrust
         // Calculate acceleration vector based on this.angle and this.ACCELERATION
-        this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
-        this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
-
+        // this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
+        // this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
+        this.ship.body.velocity.y = -120;
         // Show the frame from the spritesheet with the engine on
         this.ship.frame = 1;
     } else {
         // Otherwise, stop thrusting
-        this.ship.body.acceleration.setTo(0, 0);
+        // this.ship.body.acceleration.setTo(0, 0);
 
         // Show the frame from the spritesheet with the engine off
         this.ship.frame = 0;
@@ -216,32 +226,34 @@ GameState.prototype.update = function() {
 // This function should return true when the player activates the "go left" control
 // In this case, either holding the right arrow or tapping or clicking on the left
 // side of the screen.
-GameState.prototype.leftInputIsActive = function() {
-    var isActive = false;
+// GameState.prototype.leftInputIsActive = function() {
+//     var isActive = false;
 
-    isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
-    isActive |= (this.game.input.activePointer.isDown &&
-        this.game.input.activePointer.x < this.game.width/4);
+//     isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+//     isActive |= (this.game.input.activePointer.isDown &&
+//         this.game.input.activePointer.x < this.game.width/4);
 
-    return isActive;
-};
+//     return isActive;
+// };
 
 // This function should return true when the player activates the "go right" control
 // In this case, either holding the right arrow or tapping or clicking on the right
 // side of the screen.
-GameState.prototype.rightInputIsActive = function() {
-    var isActive = false;
+// GameState.prototype.rightInputIsActive = function() {
+//     var isActive = false;
 
-    isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
-    isActive |= (this.game.input.activePointer.isDown &&
-        this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+//     isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+//     isActive |= (this.game.input.activePointer.isDown &&
+//         this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
-    return isActive;
-};
+//     return isActive;
+// };
 
 // This function should return true when the player activates the "jump" control
 // In this case, either holding the up arrow or tapping or clicking on the center
 // part of the screen.
+
+
 GameState.prototype.upInputIsActive = function() {
     var isActive = false;
 
@@ -253,7 +265,7 @@ GameState.prototype.upInputIsActive = function() {
     return isActive;
 };
 
-var game = new Phaser.Game(848, 450, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1000, 300, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
 
 
