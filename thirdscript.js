@@ -30,8 +30,11 @@ GameState.prototype.create = function() {
     this.ship.anchor.setTo(0.5, 0.5);
     this.ship.angle = 0; // Point the ship up
 
+
     // Enable physics on the ship
     this.game.physics.enable(this.ship, Phaser.Physics.ARCADE);
+
+    this.ship.body.collideWorldBounds = true;
 
     this.ship.gravity = 400;
 
@@ -51,7 +54,7 @@ GameState.prototype.create = function() {
     this.ship.body.bounce.setTo(0.25, 0.25);
 
     // Create some ground for the ship to land on
-    game.time.events.loop(1000, send, this);
+    game.time.events.loop(800, send, this);
     this.ground = this.game.add.group();
     function send(){
     // this.ground = this.game.add.group();
@@ -66,6 +69,20 @@ GameState.prototype.create = function() {
         this.ground.add(groundBlock);
     }
   }
+//make top and bottom borders
+      for(var x = 0; x < this.game.width; x += 32) {
+        // Add the ground blocks, enable physics on each, make them immovable
+        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+        var topBlock = this.game.add.sprite(x, this.game.height - 400, 'ground');
+        this.game.physics.enable(topBlock, Phaser.Physics.ARCADE);
+        topBlock.body.immovable = true;
+        topBlock.body.allowGravity = false;
+        this.ground.add(topBlock);
+        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+        groundBlock.body.immovable = true;
+        groundBlock.body.allowGravity = false;
+        this.ground.add(groundBlock);
+    }
 
     // Create a group for explosions
     this.explosionGroup = this.game.add.group();
@@ -174,5 +191,5 @@ GameState.prototype.upInputIsActive = function() {
     return isActive;
 };
 
-var game = new Phaser.Game(1000, 300, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1000, 400, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
