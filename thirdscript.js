@@ -1,10 +1,9 @@
-// This example uses the Phaser 2.2.2 framework
-
-// Copyright © 2014 John Watson
-// Licensed under the terms of the MIT License
 
 var GameState = function(game) {
 };
+
+
+
 
 
 
@@ -175,8 +174,8 @@ GameState.prototype.getExplosion = function(x, y) {
 
 GameState.prototype.resetShip = function() {
     // Move the ship back to the top of the stage and set score back to zero
-    this.ship.x = 32;
-    this.ship.y = 32;
+    this.ship.x = 100;
+    this.ship.y = 100;
     this.ship.body.acceleration.setTo(0, 0);
     this.ship.body.velocity.setTo(0,0)
     score = 0;
@@ -233,4 +232,6 @@ GameState.prototype.upInputIsActive = function() {
 };
 
 var game = new Phaser.Game(1000, 400, Phaser.AUTO, 'game');
+
 game.state.add('game', GameState, true);
+
