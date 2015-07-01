@@ -174,7 +174,7 @@ GameState.prototype.getExplosion = function(x, y) {
 };
 
 GameState.prototype.resetShip = function() {
-    // Move the ship back to the top of the stage
+    // Move the ship back to the top of the stage and set score back to zero
     this.ship.x = 32;
     this.ship.y = 32;
     this.ship.body.acceleration.setTo(0, 0);
