@@ -179,6 +179,8 @@ GameState.prototype.resetShip = function() {
     this.ship.y = 32;
     this.ship.body.acceleration.setTo(0, 0);
     this.ship.body.velocity.setTo(0,0)
+    score = 0;
+    scoreText.text = scoreString + score;
 
 };
 
