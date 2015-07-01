@@ -198,6 +198,7 @@ GameState.prototype.update = function() {
       console.log('heyy')
             this.getExplosion(this.ship.x, this.ship.y);
             this.resetShip()
+            game.state.start('game',true, false);
           }
 
 
