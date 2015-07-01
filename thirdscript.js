@@ -6,15 +6,37 @@
 var GameState = function(game) {
 };
 
+
+
+
 // Load images and sounds
 GameState.prototype.preload = function() {
     this.game.load.spritesheet('ship', '/assets/gfx/ship.png', 32, 32);
     this.game.load.image('ground', '/assets/gfx/ground.png');
     this.game.load.spritesheet('explosion', '/assets/gfx/explosion.png', 128, 128);
+
 };
+
+
+    var score = 0;
+    var scoreString = '';
+    var scoreText;
 
 // Setup the example
 GameState.prototype.create = function() {
+
+
+    scoreString = 'Score: ';
+    scoreText = game.add.text(32, 32, scoreString + score, { font: '24px Arial', fill: '#fff' });
+
+     function updateScore() {
+          score += 1;
+          scoreText.text = scoreString + score;
+
+     };
+
+    game.time.events.loop(100, updateScore, this);
+
     // Set stage background color
     this.game.stage.backgroundColor = 0x333333;
 
@@ -54,14 +76,17 @@ GameState.prototype.create = function() {
     this.ship.body.bounce.setTo(0.25, 0.25);
 
     // Create some ground for the ship to land on
-    game.time.events.loop(800, send, this);
+    game.time.events.loop(700, send, this);
     this.ground = this.game.add.group();
     function send(){
+
     // this.ground = this.game.add.group();
-    for (x = 0; x < this.game.rnd.integerInRange(1, 3); x += 1) {
-        var randomValue = this.game.rnd.integerInRange(32, 300);
+    for (x = 0; x < this.game.rnd.integerInRange(1, 2); x += 1) {
+        var randomValue = this.game.rnd.integerInRange(0, 400);
         // Add the ground blocks, enable physics on each, make them immovable
         var groundBlock = this.game.add.sprite(game.width + 32, randomValue, 'ground');
+        groundBlock.width = 32;
+        groundBlock.height = 32;
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = true;
         groundBlock.body.allowGravity = false;
@@ -74,6 +99,10 @@ GameState.prototype.create = function() {
         // Add the ground blocks, enable physics on each, make them immovable
         var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
         var topBlock = this.game.add.sprite(x, this.game.height - 400, 'ground');
+        topBlock.width = 32;
+        topBlock.height = 32;
+        groundBlock.width = 32;
+        groundBlock.height = 32;
         this.game.physics.enable(topBlock, Phaser.Physics.ARCADE);
         topBlock.body.immovable = true;
         topBlock.body.allowGravity = false;
@@ -83,6 +112,11 @@ GameState.prototype.create = function() {
         groundBlock.body.allowGravity = false;
         this.ground.add(groundBlock);
     }
+
+
+
+
+
 
     // Create a group for explosions
     this.explosionGroup = this.game.add.group();
@@ -146,16 +180,20 @@ GameState.prototype.resetShip = function() {
     this.ship.body.acceleration.setTo(0, 0);
     this.ship.body.velocity.setTo(0,0)
 
-
-
 };
+
+
+
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
 
 
+
+
     // Collide the ship with the ground
     if(this.game.physics.arcade.collide(this.ship, this.ground)){
+      console.log('heyy')
             this.getExplosion(this.ship.x, this.ship.y);
             this.resetShip()
           }
