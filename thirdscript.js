@@ -1,11 +1,38 @@
 
-var GameState = function(game) {
+var menuState = {
+
+
+    preload: function() {
+
+    },
+
+    create: function() {
+
+    menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
+    game.input.onDown.add(start, this);
+    },
+
+    // update: function() {
+    // game.state.start('game',true, false);
+    // }
+
+
+
 };
 
+function start(){
+  game.state.start('game',true, false);
+}
 
 
 
 
+
+
+
+
+var GameState = function(game) {
+};
 
 
 // Load images and sounds
@@ -194,10 +221,10 @@ GameState.prototype.update = function() {
 
     // Collide the ship with the ground
     if(this.game.physics.arcade.collide(this.ship, this.ground)){
-      console.log('heyy')
+
             this.getExplosion(this.ship.x, this.ship.y);
             this.resetShip()
-            game.state.start('game',true, false);
+            game.state.start('menu',true, false);
           }
 
 
@@ -234,4 +261,7 @@ GameState.prototype.upInputIsActive = function() {
 var game = new Phaser.Game(1000, 400, Phaser.AUTO, 'game');
 
 game.state.add('game', GameState, true);
+game.state.add('menu', menuState);
+game.state.start('menu');
+// game.state.start('game',true, false);
 
