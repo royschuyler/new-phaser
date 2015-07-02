@@ -1,17 +1,34 @@
-// var ref = new Firebase("https://phaser-app.firebaseio.com/");
+var ref = new Firebase("https://phaser-app.firebaseio.com/");
 
+var gameInfo = [];
 
 
 var menuState = {
 
     create: function() {
 
-    menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
-    game.input.onDown.add(start, this);
-    },
+       menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
+       game.input.onDown.add(start, this);
+
+    ref.on("child_added", function(snapshot) {
+    var newPost = snapshot.val();
+    gameInfo.push(newPost);
+
+    gameInfo.sort(function(a, b){
+      return (b.score - a.score)
+    })
+
+    // console.log(newPost);
+    console.log(gameInfo);
 
 
 
+
+//*********order scores******************
+
+
+    });
+    }
 };
 
 function start(){
@@ -33,11 +50,12 @@ var diedState = {
 
 
     button.on('click', function(){
-
-      var ref = new Firebase("https://phaser-app.firebaseio.com/");
       var name = $('input').val();
-      ref.set({name: name, score: score});
+      if (name != '') {
+      ref.push({name: name, score: score})
+      }
       $(this).prop("disabled",true);
+      $('input').val('');
     });
     game.input.onDown.add(start, this);
   }
@@ -257,7 +275,6 @@ GameState.prototype.update = function() {
             this.resetShip()
             game.state.start('died',true, false);
           }
-
 
 
     if (this.upInputIsActive()) {
