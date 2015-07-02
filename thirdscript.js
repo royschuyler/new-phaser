@@ -27,6 +27,10 @@ var diedState = {
     score = 0;
     scoreText.text = scoreString + score;
     game.input.onDown.add(start, this);
+
+
+    var input = $('input');
+    input.css('display','initial')
   }
 }
 
@@ -56,6 +60,10 @@ GameState.prototype.preload = function() {
 
 // Setup the example
 GameState.prototype.create = function() {
+
+
+    var input = $('input');
+    input.css('display','none')
 
 
     scoreString = 'Score: ';
@@ -278,7 +286,7 @@ GameState.prototype.upInputIsActive = function() {
     return isActive;
 };
 
-var game = new Phaser.Game(1000, 400, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1000, 400, Phaser.CANVAS, 'roy');
 
 game.state.add('game', GameState, true);
 game.state.add('menu', menuState);

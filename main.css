@@ -1,0 +1,28 @@
+.container {
+  width: 1250px;
+  height: 800px;
+  border: solid blue;
+}
+
+#block {
+  padding-left: 5px;
+
+}
+
+.topscore {
+  width: 250px;
+  height: 400px;
+  border: solid red 1px;
+  background: pink;
+  float: right;
+
+}
+
+input {
+  width: 100px;
+  height: 20px;
+  position: absolute;
+  left: 200px;
+  top: 200px;
+  display: none;
+}
