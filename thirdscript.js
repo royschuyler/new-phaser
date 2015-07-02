@@ -14,22 +14,36 @@ var menuState = {
     var newPost = snapshot.val();
     gameInfo.push(newPost);
 
+    addToTable(gameInfo)
+
+ });
+
+function sort(gameInfo){
     gameInfo.sort(function(a, b){
-      return (b.score - a.score)
-    })
-
-    // console.log(newPost);
-    console.log(gameInfo);
-
-
-
-
-//*********order scores******************
-
-
+      return (a.score - b.score)
+      console.log(gameInfo);
     });
-    }
+  }
+
+
+
+
+
+    //function to append a row to the table
+function addToTable(gameInfo){
+  var table = $("table")
+  table.append("<tr></tr>");
+  var $target = $("tr:last");
+
+  $target.append("<td>"+ gameInfo[gameInfo.length - 1].name +"</td>");
+  $target.append("<td>"+ gameInfo[gameInfo.length - 1].score +"</td>");
+}
+   }
 };
+
+
+
+
 
 function start(){
 
