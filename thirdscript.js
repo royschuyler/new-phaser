@@ -25,6 +25,16 @@ function start(){
 }
 
 
+var diedState = {
+  create: function() {
+    diedText = game.add.text(200, 200, 'You crashed with a score of ' + score + '. Click to play again', { font: '24px Arial', fill: '#fff' });
+    score = 0;
+    scoreText.text = scoreString + score;
+    game.input.onDown.add(start, this);
+  }
+}
+
+
 
 
 
@@ -55,11 +65,14 @@ GameState.prototype.create = function() {
     scoreString = 'Score: ';
     scoreText = game.add.text(32, 32, scoreString + score, { font: '24px Arial', fill: '#fff' });
 
-     function updateScore() {
-          score += 1;
-          scoreText.text = scoreString + score;
+     // function updateScore() {
 
-     };
+     //      score += 1;
+     //      scoreText.text = scoreString + score;
+     //      console.log(score)
+
+
+     // };
 
     game.time.events.loop(100, updateScore, this);
 
@@ -101,8 +114,19 @@ GameState.prototype.create = function() {
     // Make ship bounce a little
     this.ship.body.bounce.setTo(0.25, 0.25);
 
-    // Create some ground for the ship to land on
-    game.time.events.loop(700, send, this);
+     function updateScore() {
+
+          score += 1;
+          scoreText.text = scoreString + score;
+}
+
+
+
+
+
+speed = 600;
+    game.time.events.loop(speed, send, this);
+
     this.ground = this.game.add.group();
     function send(){
 
@@ -118,6 +142,7 @@ GameState.prototype.create = function() {
         groundBlock.body.allowGravity = false;
         groundBlock.body.velocity.x = -300;
         this.ground.add(groundBlock);
+
     }
   }
 //make top and bottom borders
@@ -205,8 +230,6 @@ GameState.prototype.resetShip = function() {
     this.ship.y = 100;
     this.ship.body.acceleration.setTo(0, 0);
     this.ship.body.velocity.setTo(0,0)
-    score = 0;
-    scoreText.text = scoreString + score;
 
 };
 
@@ -224,7 +247,7 @@ GameState.prototype.update = function() {
 
             this.getExplosion(this.ship.x, this.ship.y);
             this.resetShip()
-            game.state.start('menu',true, false);
+            game.state.start('died',true, false);
           }
 
 
@@ -262,6 +285,7 @@ var game = new Phaser.Game(1000, 400, Phaser.AUTO, 'game');
 
 game.state.add('game', GameState, true);
 game.state.add('menu', menuState);
+game.state.add('died', diedState);
 game.state.start('menu');
 // game.state.start('game',true, false);
 
