@@ -1,20 +1,15 @@
 
+var ref = new Firebase("https://phaser-app.firebaseio.com/");
+
+
+
 var menuState = {
-
-
-    preload: function() {
-
-    },
 
     create: function() {
 
     menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
     game.input.onDown.add(start, this);
     },
-
-    // update: function() {
-    // game.state.start('game',true, false);
-    // }
 
 
 
@@ -28,6 +23,7 @@ function start(){
 var diedState = {
   create: function() {
     diedText = game.add.text(200, 200, 'You crashed with a score of ' + score + '. Click to play again', { font: '24px Arial', fill: '#fff' });
+    ref.push(score);
     score = 0;
     scoreText.text = scoreString + score;
     game.input.onDown.add(start, this);
@@ -80,10 +76,10 @@ GameState.prototype.create = function() {
     this.game.stage.backgroundColor = 0x333333;
 
     // Define motion constants
-    // this.ROTATION_SPEED = 180; // degrees/second
-    // this.ACCELERATION = 200; // pixels/second/second
-    // this.MAX_SPEED = 250; // pixels/second
-    // this.DRAG = 0; // pixels/second
+    // // this.ROTATION_SPEED = 180; // degrees/second
+    // this.ACCELERATION = 2000; // pixels/second/second
+    this.MAX_SPEED = 250; // pixels/second
+    this.DRAG = 100; // pixels/second
     this.GRAVITY = 400; // pixels/second/second
 
     // Add the ship to the stage
@@ -97,10 +93,10 @@ GameState.prototype.create = function() {
 
     this.ship.body.collideWorldBounds = true;
 
-    this.ship.gravity = 400;
+    // this.ship.gravity = 300;
 
     // // Set maximum velocity
-    // this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
+    this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
 
     // Add drag to the ship that slows it down when it is not accelerating
     this.ship.body.drag.setTo(this.DRAG, this.DRAG); // x, y
@@ -141,6 +137,7 @@ speed = 600;
         groundBlock.body.immovable = true;
         groundBlock.body.allowGravity = false;
         groundBlock.body.velocity.x = -300;
+        // groundBlock.body.velocity.y = -10;
         this.ground.add(groundBlock);
 
     }
