@@ -1,5 +1,4 @@
-
-var ref = new Firebase("https://phaser-app.firebaseio.com/");
+// var ref = new Firebase("https://phaser-app.firebaseio.com/");
 
 
 
@@ -16,29 +15,33 @@ var menuState = {
 };
 
 function start(){
+
+  score = 0;
+  $('button').prop("disabled",false);
   game.state.start('game',true, false);
 }
 
 
 var diedState = {
+
   create: function() {
+
     diedText = game.add.text(200, 200, 'You crashed with a score of ' + score + '. Click to play again', { font: '24px Arial', fill: '#fff' });
-    ref.push(score);
-    score = 0;
-    scoreText.text = scoreString + score;
+    var input = $('.input-container');
+    input.css('display','initial');
+    var button = $('button');
+
+
+    button.on('click', function(){
+
+      var ref = new Firebase("https://phaser-app.firebaseio.com/");
+      var name = $('input').val();
+      ref.set({name: name, score: score});
+      $(this).prop("disabled",true);
+    });
     game.input.onDown.add(start, this);
-
-
-    var input = $('input');
-    input.css('display','initial')
   }
 }
-
-
-
-
-
-
 
 
 var GameState = function(game) {
@@ -62,8 +65,8 @@ GameState.prototype.preload = function() {
 GameState.prototype.create = function() {
 
 
-    var input = $('input');
-    input.css('display','none')
+    var input = $('.input-container');
+    input.css('display','none');
 
 
     scoreString = 'Score: ';

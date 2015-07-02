@@ -11,17 +11,17 @@
   <h1>heyy new phaser</h1>
 
     <div id='game'></div>
-    <input type='text' placeholder='name'>
+    <div class='input-container'>
+      <div class='input-info'>Enter your name for the scoreboard!</div>
+      <input type='text' placeholder='name'>
+      <button>Submit</button>
+    </div>
     <div class='topscore'>
-      <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="299">
+      <table class='table'>
           <thead>
               <tr>
                   <th data-field="id">name</th>
                   <th data-field="name">score</th>
-              </tr>
-              <tr>
-                  <td >name</th>
-                  <td >score</th>
               </tr>
           </thead>
       </table>

@@ -18,11 +18,18 @@
 
 }
 
-input {
-  width: 100px;
-  height: 20px;
+.input-container {
+  width: 250px;
+  height: 200px;
   position: absolute;
-  left: 200px;
-  top: 200px;
+  left: 210px;
+  top: 325px;
   display: none;
+  color: white;
+}
+
+input {
+  width: 230px;
+  height: 20px;
+
 }
