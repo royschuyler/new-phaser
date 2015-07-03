@@ -7,7 +7,10 @@ var menuState = {
 
     create: function() {
 
+
+
        menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
+       this.game.stage.backgroundColor = 0x330033;
        game.input.onDown.add(start, this);
 
     ref.once("value", function(snapshot) {
