@@ -111,6 +111,8 @@ GameState.prototype.preload = function() {
     this.game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
     this.game.load.image('ground', '/assets/ground.png');
     this.game.load.spritesheet('explosion', '/assets/explosion.png', 128, 128);
+    this.game.load.image('grapes', '/assets/grapes.png');
+
 
 };
 
@@ -136,6 +138,7 @@ GameState.prototype.create = function() {
 
     // Set stage background color
     this.game.stage.backgroundColor = 0x333333;
+
 
     // Define motion constants
     // // this.ROTATION_SPEED = 180; // degrees/second
@@ -177,6 +180,31 @@ GameState.prototype.create = function() {
           score += 1;
           scoreText.text = scoreString + score;
 }
+
+
+
+speed = 600;
+    game.time.events.loop(speed, sendGrapes, this);
+
+    this.bunch = this.game.add.group();
+    function sendGrapes(){
+
+    // this.ground = this.game.add.group();
+    for (x = 0; x < this.game.rnd.integerInRange(1, 3); x += 1) {
+        var randomValue = this.game.rnd.integerInRange(0, 400);
+        // Add the ground blocks, enable physics on each, make them immovable
+        var grapes = this.game.add.sprite(game.width + 32, randomValue, 'grapes');
+        grapes.width = 32;
+        grapes.height = 32;
+        this.game.physics.enable(grapes, Phaser.Physics.ARCADE);
+        grapes.body.immovable = true;
+        grapes.body.allowGravity = false;
+        grapes.body.velocity.x = -300;
+        // groundBlock.body.velocity.y = -10;
+        this.bunch.add(grapes);
+
+    }
+  }
 
 
 
