@@ -10,7 +10,7 @@ var menuState = {
        menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
        game.input.onDown.add(start, this);
 
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
       var newPost = snapshot.val();
       gameInfo.push(newPost);
       addToTable(gameInfo)
@@ -31,23 +31,52 @@ var menuState = {
     //function to append a row to the table
 function addToTable(gameInfo){
 
-  console.log(gameInfo[0])
+  // console.log(gameInfo[0])
 
-  $.each(gameInfo[0], function(name, score){
-    console.log(name, score)
-  })
+  var newArr = [];
 
 
+  $.each(gameInfo[0], function(key, value){
+    // console.log(value)
+    newArr.push(value)
 
-  var table = $("table")
+
+  });
+
+  newArr.sort(function(a, b){
+    return(b.score - a.score)
+  });
+  console.log(newArr)
+
+
+
+
+var table = $("table")
+
+
+for (i = 0; i < 10; i++){
   table.append("<tr></tr>");
   var $target = $("tr:last");
 
-  $target.append("<td>"+ gameInfo[0].name +"</td>");
-  $target.append("<td>"+ gameInfo[0].score +"</td>");
+  $target.append("<td>"+ newArr[i].name +"</td>");
+  $target.append("<td>"+ newArr[i].score +"</td>");
+  }
+
+
+  // $target.append("<td>"+ newArr[1].name +"</td>");
+  // $target.append("<td>"+ newArr[1].score +"</td>");
+  // $target.append("<td>"+ newArr[2].name +"</td>");
+  // $target.append("<td>"+ newArr[2].score +"</td>");
+  // $target.append("<td>"+ newArr[3].name +"</td>");
+  // $target.append("<td>"+ newArr[3].score +"</td>");
+  // $target.append("<td>"+ newArr[4].name +"</td>");
+  // $target.append("<td>"+ newArr[4].score +"</td>");
+  // $target.append("<td>"+ newArr[5].name +"</td>");
+  // $target.append("<td>"+ newArr[5].score +"</td>");
+}
 }
    }
-};
+
 
 
 
