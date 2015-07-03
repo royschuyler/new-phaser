@@ -10,20 +10,19 @@ var menuState = {
        menuText = game.add.text(200, 200, 'welcome to the rock', { font: '24px Arial', fill: '#fff' });
        game.input.onDown.add(start, this);
 
-    ref.on("child_added", function(snapshot) {
-    var newPost = snapshot.val();
-    gameInfo.push(newPost);
-
-    addToTable(gameInfo)
+    ref.on("value", function(snapshot) {
+      var newPost = snapshot.val();
+      gameInfo.push(newPost);
+      addToTable(gameInfo)
 
  });
 
-function sort(gameInfo){
-    gameInfo.sort(function(a, b){
-      return (a.score - b.score)
-      console.log(gameInfo);
-    });
-  }
+// function sort(gameInfo){
+//     gameInfo.sort(function(a, b){
+//       return (a.score - b.score)
+//       console.log(gameInfo);
+//     });
+//   }
 
 
 
@@ -31,12 +30,21 @@ function sort(gameInfo){
 
     //function to append a row to the table
 function addToTable(gameInfo){
+
+  console.log(gameInfo[0])
+
+  $.each(gameInfo[0], function(name, score){
+    console.log(name, score)
+  })
+
+
+
   var table = $("table")
   table.append("<tr></tr>");
   var $target = $("tr:last");
 
-  $target.append("<td>"+ gameInfo[gameInfo.length - 1].name +"</td>");
-  $target.append("<td>"+ gameInfo[gameInfo.length - 1].score +"</td>");
+  $target.append("<td>"+ gameInfo[0].name +"</td>");
+  $target.append("<td>"+ gameInfo[0].score +"</td>");
 }
    }
 };
