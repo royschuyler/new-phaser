@@ -44,7 +44,7 @@ function addToTable(gameInfo){
   newArr.sort(function(a, b){
     return(b.score - a.score)
   });
-  console.log(newArr)
+  // console.log(newArr)
 
 
 
