@@ -20,12 +20,7 @@ var menuState = {
 
  });
 
-// function sort(gameInfo){
-//     gameInfo.sort(function(a, b){
-//       return (a.score - b.score)
-//       console.log(gameInfo);
-//     });
-//   }
+
 
 
 
@@ -66,16 +61,7 @@ for (i = 0; i < 10; i++){
   }
 
 
-  // $target.append("<td>"+ newArr[1].name +"</td>");
-  // $target.append("<td>"+ newArr[1].score +"</td>");
-  // $target.append("<td>"+ newArr[2].name +"</td>");
-  // $target.append("<td>"+ newArr[2].score +"</td>");
-  // $target.append("<td>"+ newArr[3].name +"</td>");
-  // $target.append("<td>"+ newArr[3].score +"</td>");
-  // $target.append("<td>"+ newArr[4].name +"</td>");
-  // $target.append("<td>"+ newArr[4].score +"</td>");
-  // $target.append("<td>"+ newArr[5].name +"</td>");
-  // $target.append("<td>"+ newArr[5].score +"</td>");
+
 }
 }
    }
@@ -144,14 +130,7 @@ GameState.prototype.create = function() {
     scoreString = 'Score: ';
     scoreText = game.add.text(32, 32, scoreString + score, { font: '24px Arial', fill: '#fff' });
 
-     // function updateScore() {
 
-     //      score += 1;
-     //      scoreText.text = scoreString + score;
-     //      console.log(score)
-
-
-     // };
 
     game.time.events.loop(100, updateScore, this);
 
