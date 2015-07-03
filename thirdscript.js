@@ -181,17 +181,23 @@ GameState.prototype.create = function() {
           scoreText.text = scoreString + score;
 }
 
+     function updateGrapeScore() {
+           score += 250;
+           scoreText.text = scoreString + score;
+
+     }
 
 
-speed = 600;
+
+speed = 3000;
     game.time.events.loop(speed, sendGrapes, this);
 
     this.bunch = this.game.add.group();
     function sendGrapes(){
 
     // this.ground = this.game.add.group();
-    for (x = 0; x < this.game.rnd.integerInRange(1, 3); x += 1) {
-        var randomValue = this.game.rnd.integerInRange(0, 400);
+    for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
+        var randomValue = this.game.rnd.integerInRange(100, 300);
         // Add the ground blocks, enable physics on each, make them immovable
         var grapes = this.game.add.sprite(game.width + 32, randomValue, 'grapes');
         grapes.width = 32;
@@ -325,6 +331,17 @@ GameState.prototype.resetShip = function() {
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
+
+
+      // Collide the ship with the grapes
+    if(this.game.physics.arcade.overlap(this.ship, this.bunch)){
+
+           score += 10;
+           scoreText.text = scoreString + score;
+           this.bunch.active = false;
+
+          }
+
 
 
 
