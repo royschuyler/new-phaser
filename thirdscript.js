@@ -199,7 +199,7 @@ GameState.prototype.create = function() {
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = true;
         groundBlock.body.allowGravity = false;
-        velocity -= 1;
+        velocity -= 0.25;
         groundBlock.body.velocity.x = velocity;
         // groundBlock.body.velocity.y = -10;
         this.ground.add(groundBlock);
@@ -310,16 +310,12 @@ GameState.prototype.update = function() {
   }
 
   if (this.upInputIsActive()) {
-    // If the UP key is down, thrust
-    // Calculate acceleration vector based on this.angle and this.ACCELERATION
-    // this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
-    // this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
+
     this.ship.body.velocity.y = -120;
     // Show the frame from the spritesheet with the engine on
     this.ship.frame = 1;
   } else {
-    // Otherwise, stop thrusting
-    // this.ship.body.acceleration.setTo(0, 0);
+
 
     // Show the frame from the spritesheet with the engine off
     this.ship.frame = 0;
