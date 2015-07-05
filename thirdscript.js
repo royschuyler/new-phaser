@@ -88,9 +88,10 @@ var GameState = function(game) {};
 // Load images
 GameState.prototype.preload = function() {
   this.game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
-  this.game.load.image('ground', '/assets/ground.png');
+  this.game.load.image('ground', '/assets/fadeBlue.png');
   this.game.load.spritesheet('explosion', '/assets/explosion.png', 128, 128);
   this.game.load.image('grapes', '/assets/grapes.png');
+  this.game.load.image('grapes', '/assets/bannana.png');
 
 };
 
@@ -156,9 +157,10 @@ GameState.prototype.create = function() {
     scoreText.text = scoreString + score;
   }
 
+//SEND FRUIT********************************************************
 
-  speed = 3000;
-  game.time.events.loop(speed, sendGrapes, this);
+  grapeSpeed = 3000;
+  game.time.events.loop(grapeSpeed, sendGrapes, this);
 
   this.bunch = this.game.add.group();
 
@@ -178,8 +180,17 @@ GameState.prototype.create = function() {
       // groundBlock.body.velocity.y = -10;
       this.bunch.add(grapes);
 
-    }
-  }
+    };
+  };
+
+
+
+  //END SEND FRUIT*****************************************************
+
+
+
+
+
 
   speed = 600;
   velocity = -350;
@@ -199,7 +210,7 @@ GameState.prototype.create = function() {
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = true;
         groundBlock.body.allowGravity = false;
-        velocity -= 0.25;
+        velocity -= 0.12;
         groundBlock.body.velocity.x = velocity;
         // groundBlock.body.velocity.y = -10;
         this.ground.add(groundBlock);
