@@ -85,7 +85,7 @@ var diedState = {
 
 var GameState = function(game) {};
 
-// Load images and sounds
+// Load images
 GameState.prototype.preload = function() {
   this.game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
   this.game.load.image('ground', '/assets/ground.png');
