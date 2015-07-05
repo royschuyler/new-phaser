@@ -1,6 +1,12 @@
 var ref = new Firebase("https://phaser-app.firebaseio.com/");
 
+
+
+
+
+
 var gameInfo = [];
+var grapes;
 
 var menuState = {
 
@@ -91,7 +97,9 @@ GameState.prototype.preload = function() {
   this.game.load.image('ground', '/assets/fadeBlue.png');
   this.game.load.spritesheet('explosion', '/assets/explosion.png', 128, 128);
   this.game.load.image('grapes', '/assets/grapes.png');
-  this.game.load.image('grapes', '/assets/bannana.png');
+  this.game.load.image('bannana', '/assets/bannana.png');
+  this.game.load.image('orange', '/assets/orange.png');
+  this.game.load.image('pear', '/assets/newPear.png');
 
 };
 
@@ -158,8 +166,9 @@ GameState.prototype.create = function() {
   }
 
 //SEND FRUIT********************************************************
-
-  grapeSpeed = 3000;
+speed = 100
+//GRAPES
+  grapeSpeed = speed;
   game.time.events.loop(grapeSpeed, sendGrapes, this);
 
   this.bunch = this.game.add.group();
@@ -168,9 +177,9 @@ GameState.prototype.create = function() {
 
     // this.ground = this.game.add.group();
     for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
-      var randomValue = this.game.rnd.integerInRange(100, 300);
+      var randomValue = this.game.rnd.integerInRange(30, 370);
       // Add the ground blocks, enable physics on each, make them immovable
-      var grapes = this.game.add.sprite(game.width + 32, randomValue, 'grapes');
+      grapes = this.game.add.sprite(game.width + 32, randomValue, 'grapes');
       grapes.width = 32;
       grapes.height = 32;
       this.game.physics.enable(grapes, Phaser.Physics.ARCADE);
@@ -180,8 +189,97 @@ GameState.prototype.create = function() {
       // groundBlock.body.velocity.y = -10;
       this.bunch.add(grapes);
 
+
     };
   };
+
+
+
+
+
+//BANNANA
+  bannanaSpeed = speed * 3.1;
+  game.time.events.loop(bannanaSpeed, sendBannanas, this);
+
+  this.bannanaBunch = this.game.add.group();
+
+  function sendBannanas() {
+
+    // this.ground = this.game.add.group();
+    for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
+      var randomValue = this.game.rnd.integerInRange(30, 370);
+      // Add the ground blocks, enable physics on each, make them immovable
+      var bannana = this.game.add.sprite(game.width + 32, randomValue, 'bannana');
+      bannana.width = 32;
+      bannana.height = 32;
+      this.game.physics.enable(bannana, Phaser.Physics.ARCADE);
+      bannana.body.immovable = true;
+      bannana.body.allowGravity = false;
+      bannana.body.velocity.x = velocity -100;
+      // groundBlock.body.velocity.y = -10;
+      this.bannanaBunch.add(bannana);
+
+    };
+  };
+
+
+
+
+
+  //ORANGE
+  orangeSpeed = speed * 9.7;
+  game.time.events.loop(bannanaSpeed, sendOranges, this);
+
+  this.orangeBunch = this.game.add.group();
+
+  function sendOranges() {
+
+    // this.ground = this.game.add.group();
+    for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
+      var randomValue = this.game.rnd.integerInRange(30, 370);
+      // Add the ground blocks, enable physics on each, make them immovable
+      var orange = this.game.add.sprite(game.width + 32, randomValue, 'orange');
+      orange.width = 32;
+      orange.height = 32;
+      this.game.physics.enable(orange, Phaser.Physics.ARCADE);
+      orange.body.immovable = true;
+      orange.body.allowGravity = false;
+      orange.body.velocity.x = velocity -100;
+      // groundBlock.body.velocity.y = -10;
+      this.orangeBunch.add(orange);
+
+    };
+  };
+
+
+
+
+  //PEAR
+  pearSpeed = speed * 19.2;
+  game.time.events.loop(pearSpeed, sendPears, this);
+
+  this.pearBunch = this.game.add.group();
+
+  function sendPears() {
+
+    // this.ground = this.game.add.group();
+    for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
+      var randomValue = this.game.rnd.integerInRange(30, 370);
+      // Add the ground blocks, enable physics on each, make them immovable
+      var pear = this.game.add.sprite(game.width + 32, randomValue, 'pear');
+      pear.width = 32;
+      pear.height = 32;
+      this.game.physics.enable(pear, Phaser.Physics.ARCADE);
+      pear.body.immovable = true;
+      pear.body.allowGravity = false;
+      pear.body.velocity.x = velocity -100;
+      // groundBlock.body.velocity.y = -10;
+      this.pearBunch.add(pear);
+
+    };
+  };
+
+
 
 
 
@@ -307,6 +405,38 @@ GameState.prototype.update = function() {
   if (this.game.physics.arcade.overlap(this.ship, this.bunch)) {
 
     score += 10;
+    scoreText.text = scoreString + score;
+    this.bunch.active = false;
+    this.bunch.destroy(grapes);
+    this.bunch.add(grapes);
+
+
+
+  }
+
+//Bannanas
+    if (this.game.physics.arcade.overlap(this.ship, this.bannanaBunch)) {
+
+    score += 20;
+    scoreText.text = scoreString + score;
+    this.bunch.active = false;
+    this.bunch.visable = false;
+  }
+
+  //oranges
+    if (this.game.physics.arcade.overlap(this.ship, this.orangeBunch)) {
+
+    score += 50;
+    scoreText.text = scoreString + score;
+    this.bunch.active = false;
+
+  }
+
+
+    //pear
+    if (this.game.physics.arcade.overlap(this.ship, this.pearBunch)) {
+
+    score += 80;
     scoreText.text = scoreString + score;
     this.bunch.active = false;
 
