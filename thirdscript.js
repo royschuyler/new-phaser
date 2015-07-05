@@ -100,6 +100,7 @@ GameState.prototype.preload = function() {
   this.game.load.image('bannana', '/assets/bannana.png');
   this.game.load.image('orange', '/assets/orange.png');
   this.game.load.image('pear', '/assets/newPear.png');
+  this.game.load.image('blue', '/assets/blue.png');
 
 };
 
@@ -318,20 +319,20 @@ speed = 100
     //make top and bottom borders
   for (var x = 0; x < this.game.width; x += 32) {
     // Add the ground blocks, enable physics on each, make them immovable
-    var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-    var topBlock = this.game.add.sprite(x, this.game.height - 400, 'ground');
-    topBlock.width = 32;
-    topBlock.height = 32;
-    groundBlock.width = 32;
-    groundBlock.height = 32;
-    this.game.physics.enable(topBlock, Phaser.Physics.ARCADE);
-    topBlock.body.immovable = true;
-    topBlock.body.allowGravity = false;
-    this.ground.add(topBlock);
-    this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-    groundBlock.body.immovable = true;
-    groundBlock.body.allowGravity = false;
-    this.ground.add(groundBlock);
+    var blueBlock = this.game.add.sprite(x, this.game.height - 32, 'blue');
+    var topblue = this.game.add.sprite(x, this.game.height - 400, 'blue');
+    topblue.width = 32;
+    topblue.height = 32;
+   blueBlock.width = 32;
+    blueBlock.height = 32;
+    this.game.physics.enable(topblue, Phaser.Physics.ARCADE);
+    topblue.body.immovable = true;
+    topblue.body.allowGravity = false;
+    this.ground.add(topblue);
+    this.game.physics.enable(blueBlock, Phaser.Physics.ARCADE);
+    blueBlock.body.immovable = true;
+    blueBlock.body.allowGravity = false;
+    this.ground.add(blueBlock);
   }
 
   // Create a group for explosions
