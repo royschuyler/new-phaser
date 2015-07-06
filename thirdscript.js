@@ -91,15 +91,15 @@ var GameState = function(game) {};
 
 // Load images
 GameState.prototype.preload = function() {
-  this.game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
-  this.game.load.image('ground', '/assets/fadeBlue.png');
-  this.game.load.spritesheet('explosion', '/assets/explosion.png', 128, 128);
-  this.game.load.image('grapes', '/assets/grapes.png');
-  this.game.load.image('bannana', '/assets/bannana.png');
-  this.game.load.image('orange', '/assets/orange.png');
-  this.game.load.image('pear', '/assets/newPear.png');
-  this.game.load.image('blue', '/assets/blue.png');
-  this.game.load.image('cherries', '/assets/cherries.png');
+  this.game.load.spritesheet('ship', './assets/ship.png', 32, 32);
+  this.game.load.image('ground', './assets/fadeBlue.png');
+  this.game.load.spritesheet('explosion', './assets/explosion.png', 128, 128);
+  this.game.load.image('grapes', './assets/grapes.png');
+  this.game.load.image('bannana', './assets/bannana.png');
+  this.game.load.image('orange', './assets/orange.png');
+  this.game.load.image('pear', './assets/newPear.png');
+  this.game.load.image('blue', './assets/blue.png');
+  this.game.load.image('cherries', './assets/cherries.png');
 
 };
 
