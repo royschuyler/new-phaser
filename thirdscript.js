@@ -99,6 +99,7 @@ GameState.prototype.preload = function() {
   this.game.load.image('orange', '/assets/orange.png');
   this.game.load.image('pear', '/assets/newPear.png');
   this.game.load.image('blue', '/assets/blue.png');
+  this.game.load.image('cherries', '/assets/cherries.png');
 
 };
 
@@ -165,9 +166,38 @@ GameState.prototype.create = function() {
   }
 
 //SEND FRUIT********************************************************
-speed = 6000
+speed = 3000
+
 //GRAPES
-  grapeSpeed = speed;
+  cherrySpeed = speed;
+  game.time.events.loop(cherrySpeed, sendCherries, this);
+
+  this.cherryBunch = this.game.add.group();
+
+  function sendCherries() {
+
+    // this.ground = this.game.add.group();
+    for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
+      var randomValue = this.game.rnd.integerInRange(30, 370);
+      // Add the ground blocks, enable physics on each, make them immovable
+      cherries = this.game.add.sprite(game.width + 32, randomValue, 'cherries');
+      cherries.width = 32;
+      cherries.height = 32;
+      this.game.physics.enable(cherries, Phaser.Physics.ARCADE);
+      cherries.body.immovable = true;
+      cherries.body.allowGravity = false;
+      cherries.body.velocity.x = velocity -100;
+      // groundBlock.body.velocity.y = -10;
+      this.cherryBunch.add(cherries);
+
+
+    };
+  };
+
+
+
+//GRAPES
+  grapeSpeed = speed * 2.3;
   game.time.events.loop(grapeSpeed, sendGrapes, this);
 
   this.bunch = this.game.add.group();
@@ -254,7 +284,7 @@ speed = 6000
 
 
   //PEAR
-  pearSpeed = speed * 19.2;
+  pearSpeed = speed * 13.3;
   game.time.events.loop(pearSpeed, sendPears, this);
 
   this.pearBunch = this.game.add.group();
@@ -307,7 +337,7 @@ speed = 6000
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = true;
         groundBlock.body.allowGravity = false;
-        velocity -= 0.12;
+        velocity -= .15;
         groundBlock.body.velocity.x = velocity;
         // groundBlock.body.velocity.y = -10;
         this.ground.add(groundBlock);
@@ -400,12 +430,25 @@ GameState.prototype.resetShip = function() {
 // The update() method is called every frame
 GameState.prototype.update = function() {
 
+
+    // Collide the ship with the grapes
+  if (this.game.physics.arcade.overlap(this.ship, this.cherryBunch)) {
+
+    score += 50;
+    scoreText.text = scoreString + score;
+    this.bunch.active = false;
+    this.cherryBunch.remove(this.cherries);
+    cherries.kill();
+    //
+
+  };
+
   // Collide the ship with the grapes
   if (this.game.physics.arcade.overlap(this.ship, this.bunch)) {
 
     score += 100;
     scoreText.text = scoreString + score;
-    this.bunch.active = false;
+    this.cherryBunch.active = false;
     this.bunch.remove(this.grapes);
     grapes.kill();
     //
