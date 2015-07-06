@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>new phaser</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+  <body>
+  <h1>heyy new phaser</h1>
+
+    <div id='game'></div>
+    <div class='input-container'>
+      <div class='input-info'>Enter your name for the scoreboard!</div>
+      <input type='text' placeholder='name'>
+      <button>Submit</button>
+    </div>
+    <div class='topscore'>
+      <table class='table'>
+          <thead>
+              <tr>
+                  <th data-field="id">name</th>
+                  <th data-field="name">score</th>
+              </tr>
+          </thead>
+      </table>
+    </div>
+     <!--end-->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="lodash.js"></script>
+
+    <script src="/phaser.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+    <script src="thirdscript.js"></script>
+  </body>
+</html>
