@@ -7,6 +7,9 @@ var ref = new Firebase("https://phaser-app.firebaseio.com/");
 
 var gameInfo = [];
 var grapes;
+var bannana;
+var pear;
+var orange;
 
 var menuState = {
 
@@ -167,7 +170,7 @@ GameState.prototype.create = function() {
   }
 
 //SEND FRUIT********************************************************
-speed = 2000
+speed = 6000
 //GRAPES
   grapeSpeed = speed;
   game.time.events.loop(grapeSpeed, sendGrapes, this);
@@ -208,9 +211,9 @@ speed = 2000
 
     // this.ground = this.game.add.group();
     for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
-      var randomValue = this.game.rnd.integerInRange(30, 370);
+      var randomValue = this.game.rnd.integerInRange(30, 330);
       // Add the ground blocks, enable physics on each, make them immovable
-      var bannana = this.game.add.sprite(game.width + 32, randomValue, 'bannana');
+      bannana = this.game.add.sprite(game.width + 32, randomValue, 'bannana');
       bannana.width = 32;
       bannana.height = 32;
       this.game.physics.enable(bannana, Phaser.Physics.ARCADE);
@@ -237,9 +240,9 @@ speed = 2000
 
     // this.ground = this.game.add.group();
     for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
-      var randomValue = this.game.rnd.integerInRange(30, 370);
+      var randomValue = this.game.rnd.integerInRange(30, 330);
       // Add the ground blocks, enable physics on each, make them immovable
-      var orange = this.game.add.sprite(game.width + 32, randomValue, 'orange');
+      orange = this.game.add.sprite(game.width + 32, randomValue, 'orange');
       orange.width = 32;
       orange.height = 32;
       this.game.physics.enable(orange, Phaser.Physics.ARCADE);
@@ -265,9 +268,9 @@ speed = 2000
 
     // this.ground = this.game.add.group();
     for (x = 0; x < this.game.rnd.integerInRange(0, 1); x += 1) {
-      var randomValue = this.game.rnd.integerInRange(30, 370);
+      var randomValue = this.game.rnd.integerInRange(30, 330);
       // Add the ground blocks, enable physics on each, make them immovable
-      var pear = this.game.add.sprite(game.width + 32, randomValue, 'pear');
+      pear = this.game.add.sprite(game.width + 32, randomValue, 'pear');
       pear.width = 32;
       pear.height = 32;
       this.game.physics.enable(pear, Phaser.Physics.ARCADE);
@@ -405,43 +408,46 @@ GameState.prototype.update = function() {
   // Collide the ship with the grapes
   if (this.game.physics.arcade.overlap(this.ship, this.bunch)) {
 
-    score += 10;
+    score += 100;
     scoreText.text = scoreString + score;
     this.bunch.active = false;
-    this.bunch.remove(grapes);
+    this.bunch.remove(this.grapes);
+    grapes.kill();
+    //
 
-
-
-
-  }
+  };
 
 //Bannanas
     if (this.game.physics.arcade.overlap(this.ship, this.bannanaBunch)) {
 
-    score += 20;
+    score += 200;
     scoreText.text = scoreString + score;
     this.bunch.active = false;
-    this.bunch.visable = false;
-  }
+    this.bannanaBunch.remove(this.bannana);
+    bannana.kill();
+  };
 
   //oranges
     if (this.game.physics.arcade.overlap(this.ship, this.orangeBunch)) {
 
-    score += 50;
+    score += 500;
     scoreText.text = scoreString + score;
-    this.bunch.active = false;
-
-  }
+    this.orangeBunch.active = false;
+    this.orangeBunch.remove(this.orange);
+    orange.kill();
+  };
 
 
     //pear
     if (this.game.physics.arcade.overlap(this.ship, this.pearBunch)) {
 
-    score += 80;
+    score += 800;
     scoreText.text = scoreString + score;
-    this.bunch.active = false;
+    this.pearBunch.active = false;
+    this.pearBunch.remove(this.pear);
+    pear.kill();
+  };
 
-  }
 
   // Collide the ship with the ground
   if (this.game.physics.arcade.collide(this.ship, this.ground)) {
