@@ -167,7 +167,7 @@ GameState.prototype.create = function() {
   }
 
 //SEND FRUIT********************************************************
-speed = 100
+speed = 2000
 //GRAPES
   grapeSpeed = speed;
   game.time.events.loop(grapeSpeed, sendGrapes, this);
@@ -408,8 +408,8 @@ GameState.prototype.update = function() {
     score += 10;
     scoreText.text = scoreString + score;
     this.bunch.active = false;
-    this.bunch.destroy(grapes);
-    this.bunch.add(grapes);
+    this.bunch.remove(grapes);
+
 
 
 
