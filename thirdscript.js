@@ -1,10 +1,5 @@
 var ref = new Firebase("https://phaser-app.firebaseio.com/");
 
-
-
-
-
-
 var gameInfo = [];
 var grapes;
 var bannana;
@@ -15,7 +10,7 @@ var menuState = {
 
   create: function() {
 
-    menuText = game.add.text(200, 200, 'welcome to the rock', {
+    menuText = game.add.text(200, 200, 'phaser game (click to play, use up arrow to thrust)', {
       font: '24px Arial',
       fill: '#fff'
     });
