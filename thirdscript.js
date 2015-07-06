@@ -10,7 +10,7 @@ var menuState = {
 
   create: function() {
 
-    menuText = game.add.text(200, 200, 'phaser game (click to play, use up arrow to thrust)', {
+    menuText = game.add.text(200, 200, 'space fruit (click to play, use up arrow to thrust)', {
       font: '24px Arial',
       fill: '#fff'
     });
